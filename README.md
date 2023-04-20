@@ -5,7 +5,7 @@ This library was created by .Net 7.0
 ## Install
 
 ```bash
-dotnet add package GenericRepository --version 1.0.0
+dotnet add package EntityFrameworkCore.GenericRepository.Nuget
 ```
 
 ## Create Repository
@@ -22,22 +22,31 @@ public selead UserRepository : Repository<User, AppDbContext>, IUserRepository
 ```Csharp
 public selead UserService: IUserService
 
-private readonly IUserRepository _userRepository
+private readonly IUserRepository _userRepository;
+private readonly IUnitOfWork _unitOfWork;
 
-public UserService(IUserRepository userRepository)
+public UserService(IUserRepository userRepository, IUnitOfWork unitOfWork)
 {
     _userRepository = userRepository;
+    _unitOfWork = unitOfWork;
 }
 
 public async Task AddAsync(User user, CancellationToken cancellationToken)
 {
     await _userRepository.AddAsync(user, cancellationToken);
+    await _unitOfWork.SaveChangesAsync(cancellationToken);
+}
+
+public async Task<IList<User>> GetAllAsync(CancellationToken cancellationToken)
+{
+    IList<User> users = await _userRepository.GetAll().ToListAsync(cancellationToken).ConfigureAwait(false);
+    return users;
 }
 ```
 
 ## Dependency Injection
 ```CSharp
-builder.Service.AddScoped<IUnitOfWork, UnitOfWok>();
+builder.Service.AddScoped<IUnitOfWork, UnitOfWok<AppDbContext>>();
 ```
 
 ## Methods
@@ -69,7 +78,7 @@ public interface IRepository<TEntity>
 
 }
 
-public sealed class Repository<TEntity, TContext> : IRepository<TEntity>
+public class Repository<TEntity, TContext> : IRepository<TEntity>
     where TEntity : class
     where TContext : DbContext
 {
