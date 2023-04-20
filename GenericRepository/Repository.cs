@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace GenericRepository;
 
-public sealed class Repository<TEntity, TContext> : IRepository<TEntity>
+public class Repository<TEntity, TContext> : IRepository<TEntity>
     where TEntity : class
     where TContext : DbContext
 {

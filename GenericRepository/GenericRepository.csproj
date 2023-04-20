@@ -5,11 +5,18 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Title>GenericRepository</Title>
+    <Title>EntityFrameworkCore.GenericRepository</Title>
     <Company>Taner Saydam</Company>
     <Description>This is a Generic Repository Service for Entity Framework Core</Description>
     <PackageIcon>maxresdefault.jpg</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/TanerSaydam/GenericRepositoryNugetPackage</RepositoryUrl>
+    <PackageId>EntityFrameworkCore.GenericRepository.Nuget</PackageId>
+    <AssemblyVersion>1.0.2</AssemblyVersion>
+    <FileVersion>1.0.2</FileVersion>
+    <Version>1.0.2</Version>
+    <Authors>Taner Saydam</Authors>
+    <PackageTags>genericrepository</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
