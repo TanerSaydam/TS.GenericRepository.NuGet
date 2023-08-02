@@ -68,7 +68,8 @@ public interface IRepository<TEntity>
     TEntity GetFirst();
 
     Task AddAsync(TEntity entity, CancellationToken cancellationToken = default);
-    Task AddRangeASync(ICollection<TEntity> entities, CancellationToken cancellationToken = default);
+    void AddAsync(TEntity entity);
+    Task AddRangeAsync(ICollection<TEntity> entities, CancellationToken cancellationToken = default);
     void Update(TEntity entity);
     void UpdateRange(ICollection<TEntity> entities);
     Task DeleteByIdAsync(string id);
@@ -89,6 +90,11 @@ public class Repository<TEntity, TContext> : IRepository<TEntity>
     {
         _context = context;
         Entity = _context.Set<TEntity>();
+    }
+
+    public void AddAsync(TEntity entity)
+    {
+        Entity.Add(entity);
     }
 
     public async Task AddAsync(TEntity entity, CancellationToken cancellationToken = default)

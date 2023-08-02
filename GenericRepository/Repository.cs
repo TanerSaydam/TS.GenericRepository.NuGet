@@ -16,12 +16,17 @@ public class Repository<TEntity, TContext> : IRepository<TEntity>
         Entity = _context.Set<TEntity>();
     }
 
+    public void Add(TEntity entity)
+    {
+        Entity.Add(entity);
+    }
+
     public async Task AddAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
         await Entity.AddAsync(entity, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task AddRangeASync(ICollection<TEntity> entities, CancellationToken cancellationToken = default)
+    public async Task AddRangeAsync(ICollection<TEntity> entities, CancellationToken cancellationToken = default)
     {
         await Entity.AddRangeAsync(entities, cancellationToken).ConfigureAwait(false);
     }
