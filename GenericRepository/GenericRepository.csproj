@@ -8,22 +8,18 @@
     <Title>EntityFrameworkCore.GenericRepository</Title>
     <Company>Taner Saydam</Company>
     <Description>This is a Generic Repository Service for Entity Framework Core</Description>
-    <PackageIcon>logo.jpeg</PackageIcon>
+    <PackageIcon>icon.jpeg</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/TanerSaydam/GenericRepositoryNugetPackage</RepositoryUrl>
     <PackageId>EntityFrameworkCore.GenericRepository.Nuget</PackageId>
     <AssemblyVersion>1.0.4</AssemblyVersion>
     <FileVersion>1.0.4</FileVersion>
-    <Version>1.0.4</Version>
+    <Version>1.0.5</Version>
     <Authors>Taner Saydam</Authors>
     <PackageTags>genericrepository</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\logo.jpeg">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
     <None Include="..\README.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
@@ -32,6 +28,13 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="icon.jpeg">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
