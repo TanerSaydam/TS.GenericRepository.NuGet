@@ -12,9 +12,9 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/TanerSaydam/GenericRepositoryNugetPackage</RepositoryUrl>
     <PackageId>EntityFrameworkCore.GenericRepository.Nuget</PackageId>
-    <AssemblyVersion>1.0.4</AssemblyVersion>
-    <FileVersion>1.0.4</FileVersion>
-    <Version>1.0.5</Version>
+    <AssemblyVersion>7.0.5</AssemblyVersion>
+    <FileVersion>7.0.5</FileVersion>
+    <Version>7.0.5</Version>
     <Authors>Taner Saydam</Authors>
     <PackageTags>genericrepository</PackageTags>
   </PropertyGroup>
