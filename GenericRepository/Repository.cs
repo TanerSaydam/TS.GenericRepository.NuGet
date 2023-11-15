@@ -31,6 +31,16 @@ public class Repository<TEntity, TContext> : IRepository<TEntity>
         await Entity.AddRangeAsync(entities, cancellationToken).ConfigureAwait(false);
     }
 
+    public bool Any(Expression<Func<TEntity, bool>> expression)
+    {
+        return Entity.Any(expression);
+    }
+
+    public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default)
+    {
+        return await Entity.AnyAsync(expression, cancellationToken);
+    }
+
     public void Delete(TEntity entity)
     {
         Entity.Remove(entity);

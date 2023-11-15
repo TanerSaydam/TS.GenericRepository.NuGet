@@ -1,21 +1,24 @@
 # Dependency
 
-This library was created by .Net 7.0
+This library was created by .Net 8.0
 
 ## Install
-
 ```bash
 dotnet add package EntityFrameworkCore.GenericRepository.Nuget
 ```
 
-## Create Repository
+## UnitOfWork Implementation
+```CSharp
+public class ApplicationDbContext : IUnitOfWork
+```
 
+## Create Repository
 ```CSharp
 public selead IUserRepository : IRepository<User>
 ```
 
 ```CSharp
-public selead UserRepository : Repository<User, AppDbContext>, IUserRepository
+public selead UserRepository : Repository<User, ApplicationDbContext>, IUserRepository
 ```
 
 ## Use
@@ -46,15 +49,14 @@ public async Task<IList<User>> GetAllAsync(CancellationToken cancellationToken)
 
 ## Dependency Injection
 ```CSharp
-builder.Service.AddScoped<IUnitOfWork, UnitOfWok<AppDbContext>>();
+builder.Service.AddScoped<IUserRepository, UserRepository>();
+builder.Service.AddScoped<IUnitOfWork>(cfr => cfr.GetRequiredService<ApplicationDbContext>());
 ```
 
 ## Methods
-
 This library have two services.
 IRepository, IUnitOfWork
 
-invoke
 ```Csharp
 public interface IRepository<TEntity>
     where TEntity : class
@@ -63,12 +65,12 @@ public interface IRepository<TEntity>
     IQueryable<TEntity> GetWhere(Expression<Func<TEntity, bool>> expression);    
     Task<TEntity> GetByExpressionAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default);
     Task<TEntity> GetFirstAsync(CancellationToken cancellationToken = default);
-
+    Task<bool> AnyAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default);
+    bool Any(Expression<Func<TEntity, bool>> expression);
     TEntity GetByExpression(Expression<Func<TEntity, bool>> expression);
     TEntity GetFirst();
-
     Task AddAsync(TEntity entity, CancellationToken cancellationToken = default);
-    void AddAsync(TEntity entity);
+    void Add(TEntity entity);
     Task AddRangeAsync(ICollection<TEntity> entities, CancellationToken cancellationToken = default);
     void Update(TEntity entity);
     void UpdateRange(ICollection<TEntity> entities);
@@ -92,7 +94,7 @@ public class Repository<TEntity, TContext> : IRepository<TEntity>
         Entity = _context.Set<TEntity>();
     }
 
-    public void AddAsync(TEntity entity)
+    public void Add(TEntity entity)
     {
         Entity.Add(entity);
     }
@@ -102,9 +104,19 @@ public class Repository<TEntity, TContext> : IRepository<TEntity>
         await Entity.AddAsync(entity, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task AddRangeASync(ICollection<TEntity> entities, CancellationToken cancellationToken = default)
+    public async Task AddRangeAsync(ICollection<TEntity> entities, CancellationToken cancellationToken = default)
     {
         await Entity.AddRangeAsync(entities, cancellationToken).ConfigureAwait(false);
+    }
+
+    public bool Any(Expression<Func<TEntity, bool>> expression)
+    {
+        return Entity.Any(expression);
+    }
+
+    public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default)
+    {
+        return await Entity.AnyAsync(expression, cancellationToken);
     }
 
     public void Delete(TEntity entity)
@@ -174,33 +186,13 @@ public class Repository<TEntity, TContext> : IRepository<TEntity>
     }
 }
 
+
 ```
 
 ```Csharp
 public interface IUnitOfWork
 {
-    Task SaveChangesAsync(CancellationToken cancellationToken);
+    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     void SaveChanges();
-}
-
-public sealed class UnitOfWork<TContext> : IUnitOfWork
-    where TContext: DbContext
-{
-    private readonly TContext _context;
-
-    public UnitOfWork(TContext context)
-    {
-        _context = context;
-    }
-
-    public void SaveChanges()
-    {
-        _context.SaveChanges();
-    }
-
-    public async Task SaveChangesAsync(CancellationToken cancellationToken)
-    {
-        await _context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
-    }
 }
 ```

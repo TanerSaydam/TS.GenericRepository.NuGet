@@ -9,10 +9,10 @@ public interface IRepository<TEntity>
     IQueryable<TEntity> GetWhere(Expression<Func<TEntity, bool>> expression);    
     Task<TEntity> GetByExpressionAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default);
     Task<TEntity> GetFirstAsync(CancellationToken cancellationToken = default);
-
+    Task<bool> AnyAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default);
+    bool Any(Expression<Func<TEntity, bool>> expression);
     TEntity GetByExpression(Expression<Func<TEntity, bool>> expression);
     TEntity GetFirst();
-
     Task AddAsync(TEntity entity, CancellationToken cancellationToken = default);
     void Add(TEntity entity);
     Task AddRangeAsync(ICollection<TEntity> entities, CancellationToken cancellationToken = default);
