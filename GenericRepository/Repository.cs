@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using System.Threading;
 
 namespace GenericRepository;
 
@@ -68,6 +69,11 @@ public class Repository<TEntity, TContext> : IRepository<TEntity>
         return Entity.AsNoTracking().AsQueryable();
     }
 
+    public IQueryable<TEntity> GetAllWithTacking()
+    {
+        return Entity.AsQueryable();
+    }
+
     public TEntity GetByExpression(Expression<Func<TEntity, bool>> expression)
     {
         TEntity entity = Entity.Where(expression).AsNoTracking().FirstOrDefault();
@@ -78,7 +84,19 @@ public class Repository<TEntity, TContext> : IRepository<TEntity>
     {
         TEntity entity = await Entity.Where(expression).AsNoTracking().FirstOrDefaultAsync(cancellationToken).ConfigureAwait(false);
         return entity;
-    } 
+    }
+
+    public TEntity GetByExpressionWithTracking(Expression<Func<TEntity, bool>> expression)
+    {
+        TEntity entity = Entity.Where(expression).FirstOrDefault();
+        return entity;
+    }
+
+    public async Task<TEntity> GetByExpressionWithTrackingAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default)
+    {
+        TEntity entity = await Entity.Where(expression).FirstOrDefaultAsync(cancellationToken).ConfigureAwait(false);
+        return entity;
+    }
 
     public TEntity GetFirst()
     {
@@ -95,6 +113,11 @@ public class Repository<TEntity, TContext> : IRepository<TEntity>
     public IQueryable<TEntity> GetWhere(Expression<Func<TEntity, bool>> expression)
     {
         return Entity.AsNoTracking().Where(expression).AsQueryable();
+    }
+
+    public IQueryable<TEntity> GetWhereWithTracking(Expression<Func<TEntity, bool>> expression)
+    {
+        return Entity.Where(expression).AsQueryable();
     }
 
     public void Update(TEntity entity)

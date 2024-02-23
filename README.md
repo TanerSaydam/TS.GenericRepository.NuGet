@@ -62,12 +62,16 @@ public interface IRepository<TEntity>
     where TEntity : class
 {
     IQueryable<TEntity> GetAll();
+    IQueryable<TEntity> GetAllWithTacking();
     IQueryable<TEntity> GetWhere(Expression<Func<TEntity, bool>> expression);    
+    IQueryable<TEntity> GetWhereWithTracking(Expression<Func<TEntity, bool>> expression);    
     Task<TEntity> GetByExpressionAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default);
+    Task<TEntity> GetByExpressionWithTrackingAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default);
     Task<TEntity> GetFirstAsync(CancellationToken cancellationToken = default);
     Task<bool> AnyAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default);
     bool Any(Expression<Func<TEntity, bool>> expression);
     TEntity GetByExpression(Expression<Func<TEntity, bool>> expression);
+    TEntity GetByExpressionWithTracking(Expression<Func<TEntity, bool>> expression);
     TEntity GetFirst();
     Task AddAsync(TEntity entity, CancellationToken cancellationToken = default);
     void Add(TEntity entity);
@@ -80,7 +84,9 @@ public interface IRepository<TEntity>
     void DeleteRange(ICollection<TEntity> entities);
 
 }
+```
 
+```Csharp
 public class Repository<TEntity, TContext> : IRepository<TEntity>
     where TEntity : class
     where TContext : DbContext
@@ -146,6 +152,11 @@ public class Repository<TEntity, TContext> : IRepository<TEntity>
         return Entity.AsNoTracking().AsQueryable();
     }
 
+    public IQueryable<TEntity> GetAllWithTacking()
+    {
+        return Entity.AsQueryable();
+    }
+
     public TEntity GetByExpression(Expression<Func<TEntity, bool>> expression)
     {
         TEntity entity = Entity.Where(expression).AsNoTracking().FirstOrDefault();
@@ -156,7 +167,19 @@ public class Repository<TEntity, TContext> : IRepository<TEntity>
     {
         TEntity entity = await Entity.Where(expression).AsNoTracking().FirstOrDefaultAsync(cancellationToken).ConfigureAwait(false);
         return entity;
-    } 
+    }
+
+    public TEntity GetByExpressionWithTracking(Expression<Func<TEntity, bool>> expression)
+    {
+        TEntity entity = Entity.Where(expression).FirstOrDefault();
+        return entity;
+    }
+
+    public async Task<TEntity> GetByExpressionWithTrackingAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default)
+    {
+        TEntity entity = await Entity.Where(expression).FirstOrDefaultAsync(cancellationToken).ConfigureAwait(false);
+        return entity;
+    }
 
     public TEntity GetFirst()
     {
@@ -173,6 +196,11 @@ public class Repository<TEntity, TContext> : IRepository<TEntity>
     public IQueryable<TEntity> GetWhere(Expression<Func<TEntity, bool>> expression)
     {
         return Entity.AsNoTracking().Where(expression).AsQueryable();
+    }
+
+    public IQueryable<TEntity> GetWhereWithTracking(Expression<Func<TEntity, bool>> expression)
+    {
+        return Entity.Where(expression).AsQueryable();
     }
 
     public void Update(TEntity entity)
@@ -193,6 +221,6 @@ public class Repository<TEntity, TContext> : IRepository<TEntity>
 public interface IUnitOfWork
 {
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
-    void SaveChanges();
+    int SaveChanges();
 }
 ```

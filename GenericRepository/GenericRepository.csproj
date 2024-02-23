@@ -14,7 +14,7 @@
     <PackageId>EntityFrameworkCore.GenericRepository.Nuget</PackageId>
     <AssemblyVersion></AssemblyVersion>
     <FileVersion></FileVersion>
-    <Version>8.0.0</Version>
+    <Version>8.0.1</Version>
     <Authors>Taner Saydam</Authors>
     <PackageTags>genericrepository</PackageTags>
   </PropertyGroup>
