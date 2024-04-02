@@ -7,8 +7,8 @@ public interface IRepository<TEntity>
 {
     IQueryable<TEntity> GetAll();
     IQueryable<TEntity> GetAllWithTacking();
-    IQueryable<TEntity> GetWhere(Expression<Func<TEntity, bool>> expression);    
-    IQueryable<TEntity> GetWhereWithTracking(Expression<Func<TEntity, bool>> expression);    
+    IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> expression);    
+    IQueryable<TEntity> WhereWithTracking(Expression<Func<TEntity, bool>> expression);    
     Task<TEntity> GetByExpressionAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default);
     Task<TEntity> GetByExpressionWithTrackingAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default);
     Task<TEntity> GetFirstAsync(CancellationToken cancellationToken = default);

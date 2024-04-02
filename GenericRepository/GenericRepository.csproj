@@ -5,18 +5,19 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Title>EntityFrameworkCore.GenericRepository</Title>
+    <Title>TS GenericRepository</Title>
     <Company>Taner Saydam</Company>
-    <Description>This is a Generic Repository Service for Entity Framework Core</Description>
-    <PackageIcon>icon.jpeg</PackageIcon>
+    <Description>This is a Generic Repository Service for Entity Framework Core with .NET Core</Description>
+    <PackageIcon>logo.jpg</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/TanerSaydam/GenericRepositoryNugetPackage</RepositoryUrl>
-    <PackageId>EntityFrameworkCore.GenericRepository.Nuget</PackageId>
+    <PackageId>TS.EntityFrameworkCore.GenericRepository</PackageId>
     <AssemblyVersion></AssemblyVersion>
     <FileVersion></FileVersion>
-    <Version>8.0.1</Version>
+    <Version>8.0.0</Version>
     <Authors>Taner Saydam</Authors>
     <PackageTags>genericrepository</PackageTags>
+    <Product>Generic Repository</Product>
   </PropertyGroup>
 
   <ItemGroup>
@@ -31,7 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="icon.jpeg">
+    <None Update="logo.jpg">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>

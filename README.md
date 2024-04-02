@@ -42,7 +42,7 @@ public async Task AddAsync(User user, CancellationToken cancellationToken)
 
 public async Task<IList<User>> GetAllAsync(CancellationToken cancellationToken)
 {
-    IList<User> users = await _userRepository.GetAll().ToListAsync(cancellationToken).ConfigureAwait(false);
+    IList<User> users = await _userRepository.GetAll().ToListAsync(cancellationToken);
     return users;
 }
 ```
@@ -63,8 +63,8 @@ public interface IRepository<TEntity>
 {
     IQueryable<TEntity> GetAll();
     IQueryable<TEntity> GetAllWithTacking();
-    IQueryable<TEntity> GetWhere(Expression<Func<TEntity, bool>> expression);    
-    IQueryable<TEntity> GetWhereWithTracking(Expression<Func<TEntity, bool>> expression);    
+    IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> expression);    
+    IQueryable<TEntity> WhereWithTracking(Expression<Func<TEntity, bool>> expression);    
     Task<TEntity> GetByExpressionAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default);
     Task<TEntity> GetByExpressionWithTrackingAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default);
     Task<TEntity> GetFirstAsync(CancellationToken cancellationToken = default);
@@ -107,12 +107,12 @@ public class Repository<TEntity, TContext> : IRepository<TEntity>
 
     public async Task AddAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
-        await Entity.AddAsync(entity, cancellationToken).ConfigureAwait(false);
+        await Entity.AddAsync(entity, cancellationToken);
     }
 
     public async Task AddRangeAsync(ICollection<TEntity> entities, CancellationToken cancellationToken = default)
     {
-        await Entity.AddRangeAsync(entities, cancellationToken).ConfigureAwait(false);
+        await Entity.AddRangeAsync(entities, cancellationToken);
     }
 
     public bool Any(Expression<Func<TEntity, bool>> expression)
@@ -132,13 +132,13 @@ public class Repository<TEntity, TContext> : IRepository<TEntity>
 
     public async Task DeleteByExpressionAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default)
     {
-        TEntity entity = await Entity.Where(expression).AsNoTracking().FirstOrDefaultAsync(cancellationToken).ConfigureAwait(false);
+        TEntity entity = await Entity.Where(expression).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
         Entity.Remove(entity);
     }
 
     public async Task DeleteByIdAsync(string id)
     {
-        TEntity entity = await Entity.FindAsync(id).ConfigureAwait(false);
+        TEntity entity = await Entity.FindAsync(id);
         Entity.Remove(entity);
     }
 
@@ -165,7 +165,7 @@ public class Repository<TEntity, TContext> : IRepository<TEntity>
 
     public async Task<TEntity> GetByExpressionAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default)
     {
-        TEntity entity = await Entity.Where(expression).AsNoTracking().FirstOrDefaultAsync(cancellationToken).ConfigureAwait(false);
+        TEntity entity = await Entity.Where(expression).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
         return entity;
     }
 
@@ -177,7 +177,7 @@ public class Repository<TEntity, TContext> : IRepository<TEntity>
 
     public async Task<TEntity> GetByExpressionWithTrackingAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default)
     {
-        TEntity entity = await Entity.Where(expression).FirstOrDefaultAsync(cancellationToken).ConfigureAwait(false);
+        TEntity entity = await Entity.Where(expression).FirstOrDefaultAsync(cancellationToken);
         return entity;
     }
 
@@ -189,16 +189,16 @@ public class Repository<TEntity, TContext> : IRepository<TEntity>
 
     public async Task<TEntity> GetFirstAsync(CancellationToken cancellationToken = default)
     {
-        TEntity entity = await Entity.AsNoTracking().FirstOrDefaultAsync(cancellationToken).ConfigureAwait(false);
+        TEntity entity = await Entity.AsNoTracking().FirstOrDefaultAsync(cancellationToken);
         return entity;
     }
 
-    public IQueryable<TEntity> GetWhere(Expression<Func<TEntity, bool>> expression)
+    public IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> expression)
     {
         return Entity.AsNoTracking().Where(expression).AsQueryable();
     }
 
-    public IQueryable<TEntity> GetWhereWithTracking(Expression<Func<TEntity, bool>> expression)
+    public IQueryable<TEntity> WhereWithTracking(Expression<Func<TEntity, bool>> expression)
     {
         return Entity.Where(expression).AsQueryable();
     }
