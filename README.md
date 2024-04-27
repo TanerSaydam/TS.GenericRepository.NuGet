@@ -62,7 +62,7 @@ public interface IRepository<TEntity>
     where TEntity : class
 {
     IQueryable<TEntity> GetAll();
-    IQueryable<TEntity> GetAllWithTacking();
+    IQueryable<TEntity> GetAllWithTracking();
     IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> expression);    
     IQueryable<TEntity> WhereWithTracking(Expression<Func<TEntity, bool>> expression);    
     Task<TEntity> GetByExpressionAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default);
@@ -152,7 +152,7 @@ public class Repository<TEntity, TContext> : IRepository<TEntity>
         return Entity.AsNoTracking().AsQueryable();
     }
 
-    public IQueryable<TEntity> GetAllWithTacking()
+    public IQueryable<TEntity> GetAllWithTracking()
     {
         return Entity.AsQueryable();
     }

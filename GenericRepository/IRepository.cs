@@ -6,7 +6,7 @@ public interface IRepository<TEntity>
     where TEntity : class
 {
     IQueryable<TEntity> GetAll();
-    IQueryable<TEntity> GetAllWithTacking();
+    IQueryable<TEntity> GetAllWithTracking();
     IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> expression);    
     IQueryable<TEntity> WhereWithTracking(Expression<Func<TEntity, bool>> expression);    
     Task<TEntity> GetByExpressionAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default);

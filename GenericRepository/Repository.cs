@@ -68,7 +68,7 @@ public class Repository<TEntity, TContext> : IRepository<TEntity>
         return Entity.AsNoTracking().AsQueryable();
     }
 
-    public IQueryable<TEntity> GetAllWithTacking()
+    public IQueryable<TEntity> GetAllWithTracking()
     {
         return Entity.AsQueryable();
     }
