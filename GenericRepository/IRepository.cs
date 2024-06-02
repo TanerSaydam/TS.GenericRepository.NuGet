@@ -7,8 +7,10 @@ public interface IRepository<TEntity>
 {
     IQueryable<TEntity> GetAll();
     IQueryable<TEntity> GetAllWithTracking();
-    IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> expression);    
-    IQueryable<TEntity> WhereWithTracking(Expression<Func<TEntity, bool>> expression);    
+    IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> expression);
+    IQueryable<TEntity> WhereWithTracking(Expression<Func<TEntity, bool>> expression);
+
+    Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default, bool isTrackingActive = true);
     Task<TEntity> GetByExpressionAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default);
     Task<TEntity> GetByExpressionWithTrackingAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default);
     Task<TEntity> GetFirstAsync(CancellationToken cancellationToken = default);
@@ -23,7 +25,7 @@ public interface IRepository<TEntity>
     void Update(TEntity entity);
     void UpdateRange(ICollection<TEntity> entities);
     Task DeleteByIdAsync(string id);
-    Task DeleteByExpressionAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default);    
+    Task DeleteByExpressionAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default);
     void Delete(TEntity entity);
     void DeleteRange(ICollection<TEntity> entities);
 

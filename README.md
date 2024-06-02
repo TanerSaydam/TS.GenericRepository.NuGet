@@ -4,7 +4,7 @@ This library was created by .Net 8.0
 
 ## Install
 ```bash
-dotnet add package EntityFrameworkCore.GenericRepository.Nuget
+dotnet add package TS.EntityFrameworkCore.GenericRepository
 ```
 
 ## UnitOfWork Implementation
@@ -40,6 +40,12 @@ public async Task AddAsync(User user, CancellationToken cancellationToken)
     await _unitOfWork.SaveChangesAsync(cancellationToken);
 }
 
+public async Task<User?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+{
+    User? user = await _userRepository.FirstOrDefaultAsync(p=> p.Id == id, cancellationToken);
+    return user;
+}
+
 public async Task<IList<User>> GetAllAsync(CancellationToken cancellationToken)
 {
     IList<User> users = await _userRepository.GetAll().ToListAsync(cancellationToken);
@@ -64,7 +70,8 @@ public interface IRepository<TEntity>
     IQueryable<TEntity> GetAll();
     IQueryable<TEntity> GetAllWithTracking();
     IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> expression);    
-    IQueryable<TEntity> WhereWithTracking(Expression<Func<TEntity, bool>> expression);    
+    IQueryable<TEntity> WhereWithTracking(Expression<Func<TEntity, bool>> expression);
+    Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default, bool isTrackingActive = true);
     Task<TEntity> GetByExpressionAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default);
     Task<TEntity> GetByExpressionWithTrackingAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default);
     Task<TEntity> GetFirstAsync(CancellationToken cancellationToken = default);
@@ -155,6 +162,21 @@ public class Repository<TEntity, TContext> : IRepository<TEntity>
     public IQueryable<TEntity> GetAllWithTracking()
     {
         return Entity.AsQueryable();
+    }
+
+    public async Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default, bool isTrackingActive = true)
+    {
+        TEntity entity;
+        if (isTrackingActive)
+        {
+            entity = await Entity.Where(expression).FirstOrDefaultAsync(cancellationToken);
+        }
+        else
+        {
+            entity = await Entity.Where(expression).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
+        }
+
+        return entity;
     }
 
     public TEntity GetByExpression(Expression<Func<TEntity, bool>> expression)

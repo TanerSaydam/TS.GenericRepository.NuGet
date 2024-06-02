@@ -85,6 +85,22 @@ public class Repository<TEntity, TContext> : IRepository<TEntity>
         return entity;
     }
 
+    public async Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default, bool isTrackingActive = true)
+    {
+        TEntity entity;
+        if (isTrackingActive)
+        {
+            entity = await Entity.Where(expression).FirstOrDefaultAsync(cancellationToken);
+        }
+        else
+        {
+            entity = await Entity.Where(expression).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
+        }
+
+        return entity;
+    }
+
+
     public TEntity GetByExpressionWithTracking(Expression<Func<TEntity, bool>> expression)
     {
         TEntity entity = Entity.Where(expression).FirstOrDefault();
@@ -128,4 +144,6 @@ public class Repository<TEntity, TContext> : IRepository<TEntity>
     {
         Entity.UpdateRange(entities);
     }
+
+
 }

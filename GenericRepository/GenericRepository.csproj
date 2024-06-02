@@ -14,7 +14,7 @@
     <PackageId>TS.EntityFrameworkCore.GenericRepository</PackageId>
     <AssemblyVersion></AssemblyVersion>
     <FileVersion></FileVersion>
-    <Version>8.0.1</Version>
+    <Version>8.0.2</Version>
     <Authors>Taner Saydam</Authors>
     <PackageTags>genericrepository</PackageTags>
     <Product>Generic Repository</Product>
