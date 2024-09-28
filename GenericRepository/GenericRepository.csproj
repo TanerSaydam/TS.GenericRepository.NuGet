@@ -7,17 +7,18 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>TS GenericRepository</Title>
     <Company>Taner Saydam</Company>
-    <Description>This is a Generic Repository Service for Entity Framework Core with .NET Core</Description>
+    <Description>This is a Generic Repository for Entity Framework Core with .NET Core</Description>
     <PackageIcon>logo.jpg</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <RepositoryUrl>https://github.com/TanerSaydam/GenericRepositoryNugetPackage</RepositoryUrl>
+    <RepositoryUrl>https://github.com/TanerSaydam/TS.GenericRepository.NuGet</RepositoryUrl>
     <PackageId>TS.EntityFrameworkCore.GenericRepository</PackageId>
     <AssemblyVersion></AssemblyVersion>
     <FileVersion></FileVersion>
-    <Version>8.0.3</Version>
+    <Version>8.0.4</Version>
     <Authors>Taner Saydam</Authors>
     <PackageTags>genericrepository</PackageTags>
     <Product>Generic Repository</Product>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>

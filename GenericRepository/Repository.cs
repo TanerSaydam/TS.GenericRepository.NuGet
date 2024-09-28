@@ -145,5 +145,8 @@ public class Repository<TEntity, TContext> : IRepository<TEntity>
         Entity.UpdateRange(entities);
     }
 
-
+    public void AddRange(ICollection<TEntity> entities)
+    {
+        Entity.AddRange(entities);
+    }
 }
