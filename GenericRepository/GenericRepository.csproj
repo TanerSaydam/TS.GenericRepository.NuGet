@@ -1,9 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>disable</Nullable>
+	<TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>TS GenericRepository</Title>
     <Company>Taner Saydam</Company>
@@ -14,11 +14,12 @@
     <PackageId>TS.EntityFrameworkCore.GenericRepository</PackageId>
     <AssemblyVersion></AssemblyVersion>
     <FileVersion></FileVersion>
-    <Version>8.0.4</Version>
+    <Version>9.0.1</Version>
     <Authors>Taner Saydam</Authors>
     <PackageTags>genericrepository</PackageTags>
     <Product>Generic Repository</Product>
     <RepositoryType>git</RepositoryType>
+	<PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
@@ -29,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0" />
   </ItemGroup>
 
   <ItemGroup>

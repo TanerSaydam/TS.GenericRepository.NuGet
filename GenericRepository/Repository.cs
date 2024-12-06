@@ -149,4 +149,39 @@ public class Repository<TEntity, TContext> : IRepository<TEntity>
     {
         Entity.AddRange(entities);
     }
+
+    public TEntity FirstOrDefault(Expression<Func<TEntity, bool>> expression, bool isTrackingActive = true)
+    {
+        if (isTrackingActive)
+        {
+            return Entity.FirstOrDefault(expression);
+        }
+
+        return Entity.AsNoTracking().FirstOrDefault(expression);
+    }
+
+    public IQueryable<KeyValuePair<bool, int>> CountBy(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default)
+    {
+        return Entity.CountBy(expression);
+    }
+
+    public TEntity First(Expression<Func<TEntity, bool>> expression, bool isTrackingActive = true)
+    {
+        if (isTrackingActive)
+        {
+            return Entity.First(expression);
+        }
+
+        return Entity.AsNoTracking().First(expression);
+    }
+
+    public async Task<TEntity> FirstAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default, bool isTrackingActive = true)
+    {
+        if (isTrackingActive)
+        {
+            return await Entity.FirstAsync(expression, cancellationToken);
+        }
+
+        return await Entity.AsNoTracking().FirstAsync(expression, cancellationToken);
+    }
 }
