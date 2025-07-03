@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 
 namespace GenericRepository;
 
@@ -183,5 +183,25 @@ public class Repository<TEntity, TContext> : IRepository<TEntity>
         }
 
         return await Entity.AsNoTracking().FirstAsync(expression, cancellationToken);
+    }
+
+    public int Count()
+    {
+        return Entity.Count();
+    }
+
+    public int Count(Expression<Func<TEntity, bool>> expression)
+    {
+        return Entity.Count(expression);
+    }
+
+    public async Task<int> CountAsync(CancellationToken cancellationToken = default)
+    {
+        return await Entity.CountAsync(cancellationToken);
+    }
+
+    public async Task<int> CountAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default)
+    {
+        return await Entity.CountAsync(expression, cancellationToken);
     }
 }

@@ -32,4 +32,8 @@ public interface IRepository<TEntity>
     void Delete(TEntity entity);
     void DeleteRange(ICollection<TEntity> entities);
     IQueryable<KeyValuePair<bool, int>> CountBy(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default);
+    int Count();
+    int Count(Expression<Func<TEntity, bool>> expression);
+    Task<int> CountAsync(CancellationToken cancellationToken = default);
+    Task<int> CountAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default);
 }
